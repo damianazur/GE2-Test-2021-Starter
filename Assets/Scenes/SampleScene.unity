@@ -612,6 +612,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1181318722}
   - component: {fileID: 1181318723}
+  - component: {fileID: 1181318724}
   m_Layer: 0
   m_Name: tail
   m_TagString: Untagged
@@ -646,6 +647,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df9abdc16a6d6624d9b99b72bafa2fee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1181318724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181318721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53722fa3f55a0c54480627abfb194332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseFrequency: 1.67
+  amplitude: 15
+  theta: 0
 --- !u!1 &1296423582
 GameObject:
   m_ObjectHideFlags: 0
@@ -971,7 +987,7 @@ MonoBehaviour:
   mass: 1
   damping: 2.42
   banking: 0.1
-  maxSpeed: 5
+  maxSpeed: 10
   maxForce: 10
 --- !u!4 &1503941576
 Transform:

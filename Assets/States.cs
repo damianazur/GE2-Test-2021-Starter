@@ -19,6 +19,9 @@ public class FetchBall: State
 {
     public override void Enter()
     {
+        AudioSource barkAudio = owner.GetComponent<AudioSource>();
+        barkAudio.Play();
+
         GameObject targetBall = owner.GetComponent<Dog>().targetBall;
 
         owner.GetComponent<Seek>().targetGameObject = targetBall;
