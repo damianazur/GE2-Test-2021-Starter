@@ -12,7 +12,7 @@ public class Boid : MonoBehaviour
     public float mass = 1;
 
     [Range(0.0f, 10.0f)]
-    public float damping = 0.01f;
+    public float damping = 0.1f;
 
     [Range(0.0f, 1.0f)]
     public float banking = 0.1f;
@@ -35,6 +35,7 @@ public class Boid : MonoBehaviour
 
     public Vector3 SeekForce(Vector3 target)
     {
+        target.y = 0;
         Vector3 desired = target - transform.position;
         desired.Normalize();
         desired *= maxSpeed;
@@ -43,6 +44,7 @@ public class Boid : MonoBehaviour
 
     public Vector3 ArriveForce(Vector3 target, float slowingDistance = 15.0f)
     {
+        target.y = 0;
         Vector3 toTarget = target - transform.position;
 
         float distance = toTarget.magnitude;
