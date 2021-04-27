@@ -41,7 +41,7 @@ public class FetchBall: State
         }
         
         // When ballAttach is almost touching ball then pick up the ball
-        if (distToBall < 0.5f) {
+        if (distToBall < 0.7f) {
             targetBall.transform.SetParent(ballAttach.transform);
             targetBall.transform.localPosition = new Vector3(targetBall.transform.localPosition.x, 0, targetBall.transform.localPosition.z);
 
@@ -84,6 +84,7 @@ public class ReturnToOwner: State
             targetBall.GetComponent<Rigidbody>().isKinematic = false;
             targetBall.GetComponent<Rigidbody>().useGravity = true;
             owner.GetComponent<Seek>().enabled = false;
+            owner.ChangeState(new WaitForBall());
         }
     }
 
@@ -104,9 +105,18 @@ public class WaitForBall: State
     {
         GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
         if (balls.Length != 0) {
-            owner.GetComponent<Dog>().targetBall = balls[0];
-            Debug.Log("ball" + balls[0].tag);
-            owner.ChangeState(new FetchBall());
+            foreach (var ball in balls) {
+                GameObject returnOwnerCamera =  owner.GetComponent<Dog>().returnOwnerCamera;
+                Vector3 ballPos = ball.transform.position;
+                float distBallToPlayer = Vector3.Distance(returnOwnerCamera.transform.position, ballPos);
+                
+                if (distBallToPlayer > 11.0f) {
+                    owner.GetComponent<Dog>().targetBall = ball;
+                    owner.ChangeState(new FetchBall());
+
+                    return;
+                }
+            }
         }
     }
 
