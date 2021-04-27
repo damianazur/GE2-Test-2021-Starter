@@ -76,13 +76,14 @@ public class ReturnToOwner: State
     {
         float dropBallDistance = 10.0f;
 
+        // Get variables
         GameObject targetBall = owner.GetComponent<Dog>().targetBall;
         GameObject returnOwnerCamera =  owner.GetComponent<Dog>().returnOwnerCamera;
-        Vector3 targetPos = targetBall.transform.position;
-        float distToBall = Vector3.Distance(returnOwnerCamera.transform.position, targetPos);
+        Vector3 ballPos = targetBall.transform.position;
+        float distToPlayer = Vector3.Distance(returnOwnerCamera.transform.position, ballPos);
         
         // Drop the ball
-        if (distToBall < dropBallDistance) {
+        if (distToPlayer < dropBallDistance) {
             targetBall.tag = "Untagged";
             targetBall.transform.SetParent(null);
             targetBall.GetComponent<Rigidbody>().isKinematic = false;
@@ -94,7 +95,7 @@ public class ReturnToOwner: State
 
     public override void Exit()
     {
-        
+        owner.GetComponent<Seek>().enabled = false;
     }
 }
 
@@ -108,11 +109,12 @@ public class WaitForBall: State
     public override void Think()
     {
         GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
+        GameObject returnOwnerCamera =  owner.GetComponent<Dog>().returnOwnerCamera;
+
         // If no balls are found then wait until there is
         if (balls.Length != 0) {
             // Iterate over all balls
             foreach (var ball in balls) {
-                GameObject returnOwnerCamera =  owner.GetComponent<Dog>().returnOwnerCamera;
                 Vector3 ballPos = ball.transform.position;
                 float distBallToPlayer = Vector3.Distance(returnOwnerCamera.transform.position, ballPos);
                 
@@ -124,6 +126,11 @@ public class WaitForBall: State
                 }
             }
         }
+        
+        // Dog will always look at the player
+        Vector3 playerPosition = returnOwnerCamera.transform.position;
+        playerPosition.y = 0;
+        owner.GetComponent<Dog>().transform.LookAt(playerPosition);
     }
 
     public override void Exit()

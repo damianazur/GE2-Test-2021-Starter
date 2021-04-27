@@ -20,7 +20,6 @@ public class Boid : MonoBehaviour
     public float maxForce = 15.0f;
     
 
-
     // Use this for initialization
     void Start()
     {
