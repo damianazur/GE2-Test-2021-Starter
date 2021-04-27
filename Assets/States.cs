@@ -83,6 +83,7 @@ public class ReturnToOwner: State
         
         // Drop the ball
         if (distToBall < dropBallDistance) {
+            targetBall.tag = "Untagged";
             targetBall.transform.SetParent(null);
             targetBall.GetComponent<Rigidbody>().isKinematic = false;
             targetBall.GetComponent<Rigidbody>().useGravity = true;
