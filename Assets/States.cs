@@ -108,13 +108,15 @@ public class WaitForBall: State
     public override void Think()
     {
         GameObject[] balls = GameObject.FindGameObjectsWithTag("Ball");
+        // If no balls are found then wait until there is
         if (balls.Length != 0) {
+            // Iterate over all balls
             foreach (var ball in balls) {
                 GameObject returnOwnerCamera =  owner.GetComponent<Dog>().returnOwnerCamera;
                 Vector3 ballPos = ball.transform.position;
                 float distBallToPlayer = Vector3.Distance(returnOwnerCamera.transform.position, ballPos);
                 
-                if (distBallToPlayer > 11.0f) {
+                if (distBallToPlayer > 10.0f) {
                     owner.GetComponent<Dog>().targetBall = ball;
                     owner.ChangeState(new FetchBall());
 
